@@ -64,12 +64,16 @@ namespace AspNetElasticSearchDemo.Services
 
         public SuggestResult Suggest(string text)
         {
+#if false //todo
             var suggestResponse = client.Suggest<RoomDocument>(suggest => suggest.GlobalText(text).Index(indexName)
                 .Completion("Rooms", descriptor => descriptor.Field(r => r.RoomNameCompletion))
                 .Completion("Hotels", descriptor => descriptor.Field(r => r.HotelNameCompletion))
                 );
             return new SuggestResult { Suggestions = suggestResponse.Suggestions.Select(s => SuggestionDTO.FromSuggestion(s)).Where(s => s.Terms.Any()) };
-        }
+#else
+            return new SuggestResult { };
+#endif
+            }
 
         public SearchResult Search(DateTime arrival, int nights, decimal? maxPrice = null, IEnumerable<TermFilterDTO> terms = null, string text = null, int offset = 0)
         {
@@ -78,7 +82,6 @@ namespace AspNetElasticSearchDemo.Services
             slimLock.EnterReadLock();
 
             var departure = arrival.AddDays(nights);
-
 
             var searchResponse = client.Search<RoomDocument>(descriptor =>
             descriptor
@@ -150,13 +153,14 @@ namespace AspNetElasticSearchDemo.Services
                                 }
                 ))))
             );
+
             slimLock.ExitReadLock();
             sw.Stop();
             var result = new SearchResult
             {
                 Aggregations = searchResponse.Aggregations.Select(aggr => new AggregationDTO { Aggregation = aggr.Key, Terms = (aggr.Value as BucketAggregate).Items.Select(bucket => TermDTO.FromBucket(bucket)).Where(dto => dto != null && dto.DocumentCount > 0) }),
                 TotalResults = searchResponse.Total,
-                QueryDuration = searchResponse.Took,
+                QueryDuration = (int)searchResponse.Took,
                 RequestDuration = sw.ElapsedMilliseconds,
                 Hits = searchResponse.Hits.Select(hit => new ResultDTO { Room = hit.Source, Score = Convert.ToDecimal(hit.Score) })
             };
@@ -166,7 +170,7 @@ namespace AspNetElasticSearchDemo.Services
 
         public void UpdateIndex(IEnumerable<Room> rooms)
         {
-            //Pessimistic approach: dropping/recreting the index will do for this demo
+            //Pessimistic approach: dropping/recreating the index will do for this demo
             //You should consider updating it instead
             slimLock.EnterWriteLock();
             DeleteIndex();

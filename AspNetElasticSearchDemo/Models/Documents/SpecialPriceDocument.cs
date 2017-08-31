@@ -30,7 +30,7 @@ namespace AspNetElasticSearchDemo.Models.Documents
             };
         }
 
-        [Date(Store = true, NumericResolution = NumericResolutionUnit.Seconds, Similarity = SimilarityOption.Default)]
+        //[Date(Store = true, NumericResolution = NumericResolutionUnit.Seconds, Similarity = SimilarityOption.Default)]
         public DateTime Date { get; set; }
         public bool IsDiscounted { get; set; }
         public decimal Price { get; set; }

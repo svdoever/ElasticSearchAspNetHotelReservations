@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AspNetElasticSearchDemo.Models.Documents;
 
 namespace AspNetElasticSearchDemo.Models.DTOs
 {
@@ -16,7 +17,7 @@ namespace AspNetElasticSearchDemo.Models.DTOs
         public string Suggestion { get; private set; }
         public IEnumerable<string> Terms { get; private set; }
 
-        public static SuggestionDTO FromSuggestion (KeyValuePair<string, Suggest[]> suggestion)
+        public static SuggestionDTO FromSuggestion (KeyValuePair<string, Suggest<RoomDocument>[]> suggestion)
         {
             return new SuggestionDTO
             {

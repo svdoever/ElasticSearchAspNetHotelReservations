@@ -38,22 +38,26 @@ namespace AspNetElasticSearchDemo.Models.Documents
             };
         }
 
-        [Date(Store = true, NumericResolution = NumericResolutionUnit.Seconds, Similarity = SimilarityOption.Default)]
+        //[Date(Store = true, NumericResolution = NumericResolutionUnit.Seconds, Similarity = SimilarityOption.Default)]
         public DateTime Date { get; set; }
-        [String(Index = FieldIndexOption.NotAnalyzed)]
+        //[String(Index = FieldIndexOption.NotAnalyzed)]
+        [Keyword]
         public string RoomId { get; set; }
-        [String(Analyzer = "simple", Index = FieldIndexOption.Analyzed, Store = true, Similarity = SimilarityOption.BM25)]
+        //[String(Analyzer = "simple", Index = FieldIndexOption.Analyzed, Store = true, Similarity = SimilarityOption.BM25)]
         public string RoomName { get; set; }
 
         [Completion]
         public string RoomNameCompletion { get; set; }
 
-        [String(Index = FieldIndexOption.NotAnalyzed)]
+        //[String(Index = FieldIndexOption.NotAnalyzed)]
+        [Keyword]
         public string Image { get; set; }
 
-        [String(Index = FieldIndexOption.NotAnalyzed, Store = true, Similarity = SimilarityOption.BM25)]
+        //[String(Index = FieldIndexOption.NotAnalyzed, Store = true, Similarity = SimilarityOption.BM25)]
+        [Keyword]
         public string HotelName { get; set; }
-        [String(Analyzer = "simple", Index = FieldIndexOption.Analyzed, IncludeInAll = false, Store = true, Similarity = SimilarityOption.BM25)]
+        //[String(Analyzer = "simple", Index = FieldIndexOption.Analyzed, IncludeInAll = false, Store = true, Similarity = SimilarityOption.BM25)]
+        [Text]
         public string HotelNameAnalyzed { get; set; }
         [Completion]
         public string HotelNameCompletion { get; set; }
@@ -61,15 +65,17 @@ namespace AspNetElasticSearchDemo.Models.Documents
         public decimal Price { get; set; }
         public decimal? Discount { get; set; }
 
-        [Number(Store = false, Index = NonStringIndexOption.NotAnalyzed)]
+        //[Number(Store = false, Index = NonStringIndexOption.NotAnalyzed)]
         public decimal Rating { get; set; }
 
-        [Number(Store = false, Index = NonStringIndexOption.NotAnalyzed)]
+        //[Number(Store = false, Index = NonStringIndexOption.NotAnalyzed)]
         public int TotalPeople { get; set; }
 
-        [String(Index = FieldIndexOption.NotAnalyzed, Store = true, IncludeInAll = false, TermVector = TermVectorOption.Yes)]
+        //[String(Index = FieldIndexOption.NotAnalyzed, Store = true, IncludeInAll = false, TermVector = TermVectorOption.Yes)]
+        [Keyword]
         public string[] BedTypes { get; set; }
-        [String(Index = FieldIndexOption.NotAnalyzed, Store = true, IncludeInAll = false, TermVector = TermVectorOption.Yes)]
+        //[String(Index = FieldIndexOption.NotAnalyzed, Store = true, IncludeInAll = false, TermVector = TermVectorOption.Yes)]
+        [Keyword]
         public string[] Services { get; set; }
         
     }

@@ -32,7 +32,7 @@ namespace AspNetElasticSearchDemo.Models.Documents
             };
         }
 
-        [Date(Store = true, NumericResolution = NumericResolutionUnit.Seconds, Similarity = SimilarityOption.Default)]
+        //[Date(Store = true, Similarity = SimilarityOption.Classic)]
         public DateTime Date { get; set; }
 
     }

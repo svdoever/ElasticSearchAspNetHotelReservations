@@ -22,10 +22,10 @@ namespace AspNetElasticSearchDemo.Models.DTOs
                 var rangeBucket = bucket as RangeBucket;
                 return new TermDTO { Term = rangeBucket.Key, DocumentCount = rangeBucket.DocCount };
                 
-            } else if (bucket is KeyedBucket)
+            } else if (bucket is KeyedBucket<object>)
             {
-                var keyedBucket = bucket as KeyedBucket;
-                return new TermDTO { Term = keyedBucket.Key, DocumentCount = keyedBucket.DocCount.HasValue ? keyedBucket.DocCount.Value : 0 };
+                var keyedBucket = bucket as KeyedBucket<object>;
+                return new TermDTO { Term = keyedBucket.Key.ToString(), DocumentCount = keyedBucket.DocCount.HasValue ? keyedBucket.DocCount.Value : 0 };
             }
             return null;
 
