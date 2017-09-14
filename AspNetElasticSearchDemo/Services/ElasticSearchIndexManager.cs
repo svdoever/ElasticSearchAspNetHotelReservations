@@ -71,9 +71,9 @@ namespace AspNetElasticSearchDemo.Services
                 );
             return new SuggestResult { Suggestions = suggestResponse.Suggestions.Select(s => SuggestionDTO.FromSuggestion(s)).Where(s => s.Terms.Any()) };
 #else
-            return new SuggestResult { };
+            return new SuggestResult { Suggestions = new List<SuggestionDTO> { new SuggestionDTO { Suggestion = "serge", Terms = new List<string> { "dean", "scott", "tahne" } } } };
 #endif
-            }
+        }
 
         public SearchResult Search(DateTime arrival, int nights, decimal? maxPrice = null, IEnumerable<TermFilterDTO> terms = null, string text = null, int offset = 0)
         {

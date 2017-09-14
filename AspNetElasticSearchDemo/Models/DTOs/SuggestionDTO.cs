@@ -10,12 +10,14 @@ namespace AspNetElasticSearchDemo.Models.DTOs
 {
     public class SuggestionDTO
     {
-        private SuggestionDTO()
+        public SuggestionDTO()
         {
 
         }
-        public string Suggestion { get; private set; }
-        public IEnumerable<string> Terms { get; private set; }
+
+        
+        public string Suggestion { get; set; }
+        public IEnumerable<string> Terms { get; set; }
 
         public static SuggestionDTO FromSuggestion (KeyValuePair<string, Suggest<RoomDocument>[]> suggestion)
         {
